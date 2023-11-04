@@ -107,7 +107,7 @@ def getCandidateInfoDict(requireOnDisk_bool=True):
 class Ct:
     def __init__(self, series_uid):
         mhd_path = glob.glob(
-            'data-unversioned/part2/luna/subset*/{}.mhd'.format(series_uid)
+            'C:/data/subset*/{}.mhd'.format(series_uid)
         )[0]
 
         ct_mhd = sitk.ReadImage(mhd_path)
@@ -134,7 +134,7 @@ class Ct:
                                  .nonzero()[0].tolist())
 
     def buildAnnotationMask(self, positiveInfo_list, threshold_hu=-700):
-        boundingBox_a = np.zeros_like(self.hu_a, dtype=np.bool)
+        boundingBox_a = np.zeros_like(self.hu_a, dtype=bool)
 
         for candidateInfo_tup in positiveInfo_list:
             center_irc = xyz2irc(
