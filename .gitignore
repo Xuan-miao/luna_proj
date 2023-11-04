@@ -1,1 +1,9 @@
-demo.p
+.idea
+data-unversioned
+runs
+
+.DS_Store
+tools
+*_old
+
+demo.py

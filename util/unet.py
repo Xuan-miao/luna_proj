@@ -64,15 +64,16 @@ class UNet(nn.Module):
         prev_channels = in_channels
         self.down_path = nn.ModuleList()
         for i in range(depth):
-            self.down_path.append(UNetConvBlock(prev_channels, 2**(wf+i),
+            self.down_path.append(UNetConvBlock(prev_channels, 2 ** (wf + i),
                                                 padding, batch_norm))
-            prev_channels = 2**(wf+i)
+            prev_channels = 2 ** (wf + i)
 
         self.up_path = nn.ModuleList()
         for i in reversed(range(depth - 1)):
-            self.up_path.append(UNetUpBlock(prev_channels, 2**(wf+i), up_mode,
-                                            padding, batch_norm))
-            prev_channels = 2**(wf+i)
+            self.up_path.append(
+                UNetUpBlock(prev_channels, 2 ** (wf + i), up_mode,
+                            padding, batch_norm))
+            prev_channels = 2 ** (wf + i)
 
         self.last = nn.Conv2d(prev_channels, n_classes, kernel_size=1)
 
@@ -80,12 +81,12 @@ class UNet(nn.Module):
         blocks = []
         for i, down in enumerate(self.down_path):
             x = down(x)
-            if i != len(self.down_path)-1:
+            if i != len(self.down_path) - 1:
                 blocks.append(x)
                 x = F.avg_pool2d(x, 2)
 
         for i, up in enumerate(self.up_path):
-            x = up(x, blocks[-i-1])
+            x = up(x, blocks[-i - 1])
 
         return self.last(x)
 
@@ -123,8 +124,9 @@ class UNetUpBlock(nn.Module):
             self.up = nn.ConvTranspose2d(in_size, out_size, kernel_size=2,
                                          stride=2)
         elif up_mode == 'upsample':
-            self.up = nn.Sequential(nn.Upsample(mode='bilinear', scale_factor=2),
-                                    nn.Conv2d(in_size, out_size, kernel_size=1))
+            self.up = nn.Sequential(
+                nn.Upsample(mode='bilinear', scale_factor=2),
+                nn.Conv2d(in_size, out_size, kernel_size=1))
 
         self.conv_block = UNetConvBlock(in_size, out_size, padding, batch_norm)
 
@@ -132,7 +134,8 @@ class UNetUpBlock(nn.Module):
         _, _, layer_height, layer_width = layer.size()
         diff_y = (layer_height - target_size[0]) // 2
         diff_x = (layer_width - target_size[1]) // 2
-        return layer[:, :, diff_y:(diff_y + target_size[0]), diff_x:(diff_x + target_size[1])]
+        return layer[:, :, diff_y:(diff_y + target_size[0]),
+               diff_x:(diff_x + target_size[1])]
 
     def forward(self, x, bridge):
         up = self.up(x)
