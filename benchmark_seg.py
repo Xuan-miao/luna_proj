@@ -15,7 +15,8 @@ from torch.optim import SGD, Adam
 from torch.utils.data import DataLoader
 
 from util.util import enumerateWithEstimate
-from dsets import Luna2dSegmentationDataset, TrainingLuna2dSegmentationDataset, getCt
+from dsets import Luna2dSegmentationDataset, \
+    TrainingLuna2dSegmentationDataset, getCt
 from util.logconf import logging
 from util.util import xyz2irc
 from model import UNetWrapper, SegmentationAugmentation
@@ -26,11 +27,13 @@ log = logging.getLogger(__name__)
 # log.setLevel(logging.INFO)
 log.setLevel(logging.DEBUG)
 
+
 class BenchmarkLuna2dSegmentationDataset(TrainingLuna2dSegmentationDataset):
     def __len__(self):
         # return 500
         return 5000
         return 1000
+
 
 class LunaBenchmarkApp(LunaTrainingApp):
     def initTrainDl(self):

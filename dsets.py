@@ -396,7 +396,7 @@ class TvTrainingLuna2dSegmentationDataset(torch.utils.data.Dataset):
         data = torch.load('./imgs_and_masks.pt')
         suids = list(set(data['suids']))
         trn_mask_suids = torch.arange(len(suids)) % val_stride < (
-                    val_stride - 1)
+                val_stride - 1)
         trn_suids = {s for i, s in zip(trn_mask_suids, suids) if i}
         trn_mask = torch.tensor([(s in trn_suids) for s in data["suids"]])
         if not isValSet_bool:

@@ -23,7 +23,7 @@ log.setLevel(logging.INFO)
 
 class LunaPrepCacheApp:
     @classmethod
-    def __init__(self, sys_argv=None):
+    def __init__(cls, sys_argv=None):
         if sys_argv is None:
             sys_argv = sys.argv[1:]
 
@@ -44,7 +44,7 @@ class LunaPrepCacheApp:
         #     action='store_true',
         # )
 
-        self.cli_args = parser.parse_args(sys_argv)
+        cls.cli_args = parser.parse_args(sys_argv)
 
     def main(self):
         log.info("Starting {}, {}".format(type(self).__name__, self.cli_args))

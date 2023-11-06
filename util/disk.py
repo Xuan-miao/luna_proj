@@ -27,6 +27,7 @@ class GzipDisk(Disk):
           compression and decompression operations did not properly handle results of
           2 or 4 GiB.
 
+        :param key:
         :param value: value to convert
         :param bool read: True when value is file-like object
         :return: (size, mode, filename, value) tuple for Cache table
